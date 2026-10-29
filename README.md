@@ -8,5 +8,6 @@ Projets et TP réalisés dans le cycle ingénieur **Sécurité et Technologies I
 | `java/` | Programmation orientée objet en Java |
 | `python/` | Scripts et projets Python |
 | `architecture/` | Architecture des ordinateurs |
+| `programmation-systeme/` | Programmation système (C / POSIX) : cours, TD et TP |
 
 Voir aussi : [c-data-structures](https://github.com/Tienou4/c-data-structures), [matrix-logic-puzzles](https://github.com/Tienou4/matrix-logic-puzzles).

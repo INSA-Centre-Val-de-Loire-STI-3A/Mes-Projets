@@ -1,0 +1,8 @@
+bin/
+*.o
+*.d
+a.out
+# fichiers générés par les tests
+*.tmp
+test_*.txt
+out*.txt
