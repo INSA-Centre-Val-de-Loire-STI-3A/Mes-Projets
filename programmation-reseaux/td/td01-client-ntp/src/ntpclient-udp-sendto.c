@@ -43,7 +43,7 @@ int main(int argc , char **argv)
     int sockfd;
     int portno = 123;
     sockfd = socket(AF_INET, SOCK_DGRAM, 0);
-    char *host_name = "fr.pool.ntp.org";
+    char *host_name = (argc > 1) ? argv[1] : "fr.pool.ntp.org"; /* serveur en argument (ex. 25) */
     struct hostent *server;
     struct sockaddr_in serv_addr;
 

@@ -10,14 +10,35 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Installer cppcheck
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq cppcheck
+
       # compile chaque source C non vide ; les squelettes des TD à venir sont ignorés
-      - name: Compiler les sources C
+      - name: Compiler (-Wall -Wextra -Werror, analyseur statique de gcc)
         run: |
           status=0
           for f in $(git ls-files '*.c'); do
             [ -s "$f" ] || continue
             echo "::group::$f"
-            gcc -Wall -Wextra -std=gnu11 -c -o /dev/null "$f" || status=1
+            gcc -Wall -Wextra -Werror -fanalyzer -std=gnu11 -c -o /dev/null "$f" || status=1
             echo "::endgroup::"
           done
           exit $status
+
+      - name: Analyse statique (cppcheck)
+        run: |
+          git ls-files '*.c' | while read -r f; do [ -s "$f" ] && echo "$f"; done > sources.txt
+          cppcheck --enable=warning,portability --error-exitcode=1 --inline-suppr \
+                   --file-list=sources.txt
+
+      # exécute les programmes qui n'ont pas besoin du réseau, sous AddressSanitizer
+      - name: Exécuter sous AddressSanitizer
+        run: |
+          cd programmation-systeme/td/td01-appels-systeme/src
+          gcc -fsanitize=address,undefined -g -o /tmp/ex01 ex01_hello.c
+          test "$(/tmp/ex01)" = "hello"
+          for ex in ex02_03_erreur ex04_my_perror; do
+            gcc -fsanitize=address,undefined -g -o /tmp/$ex $ex.c
+            # ces exercices provoquent volontairement EBADF : code de sortie 1 attendu
+            /tmp/$ex 2>&1 | grep -q "Bad file descriptor"
+          done

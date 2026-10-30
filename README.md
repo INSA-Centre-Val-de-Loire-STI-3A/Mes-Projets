@@ -4,7 +4,7 @@
 
 **Programmation système et réseau en C sous Linux · Administration réseau sur Proxmox**
 
-[![build](https://github.com/Tienou4/Mes-Projets/actions/workflows/build.yml/badge.svg)](https://github.com/Tienou4/Mes-Projets/actions/workflows/build.yml)
+[![build](https://github.com/Tienou4/insa-cvl-sti/actions/workflows/build.yml/badge.svg)](https://github.com/Tienou4/insa-cvl-sti/actions/workflows/build.yml)
 ![C](https://img.shields.io/badge/C-GNU11-00599C?logo=c&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-POSIX-FCC624?logo=linux&logoColor=black)
 ![Proxmox](https://img.shields.io/badge/Proxmox-Debian%2013-E57000?logo=proxmox&logoColor=white)
@@ -49,13 +49,14 @@ Chaque TD suit le même schéma : `README.md` (énoncé résumé, exercices),
 Prérequis : Linux, `gcc`, `make`.
 
 ```sh
-git clone https://github.com/Tienou4/Mes-Projets.git
-cd Mes-Projets/programmation-systeme/td/td01-appels-systeme
+git clone https://github.com/Tienou4/insa-cvl-sti.git
+cd insa-cvl-sti/programmation-systeme/td/td01-appels-systeme
 make
 ./bin/ex02_03_erreur      # write: Bad file descriptor
 ```
 
-À chaque push, GitHub Actions compile toutes les sources C avec `-Wall -Wextra`.
+À chaque push, GitHub Actions compile toutes les sources C (`-Wall -Wextra -Werror`, analyseur
+statique de gcc), les passe à `cppcheck` et exécute les TD système sous AddressSanitizer.
 
 ## Auteur
 

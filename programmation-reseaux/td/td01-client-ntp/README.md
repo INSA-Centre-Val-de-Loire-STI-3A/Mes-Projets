@@ -14,3 +14,13 @@ make
 ```
 
 Vérification Wireshark (ex. 18) : filtre `udp.port == 123`.
+
+## Points de sécurité
+
+- `gethostbyname` est obsolète : IPv4 seulement, et non réentrant. `getaddrinfo` le remplace.
+- Après `recvfrom`, vérifier que le nombre d'octets reçus vaut `sizeof(ntp_packet)` avant de lire
+  les champs, et que la réponse vient bien de l'adresse interrogée.
+- Comparer l'*originate timestamp* de la réponse au *transmit timestamp* envoyé (RFC 5905) :
+  une réponse qui ne correspond pas peut être usurpée.
+- Fixer un délai de réception (`SO_RCVTIMEO`) pour ne pas bloquer indéfiniment si le serveur ne répond pas.
+- NTP n'est pas authentifié : en production, utiliser NTS (RFC 8915).
