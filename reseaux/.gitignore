@@ -1,0 +1,5 @@
+# documents de cours volumineux / non redistribuables
+*.pdf
+# fichiers temporaires
+*.swp
+*~

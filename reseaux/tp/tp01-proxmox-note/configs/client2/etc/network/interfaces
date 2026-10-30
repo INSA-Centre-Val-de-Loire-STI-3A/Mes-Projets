@@ -1,0 +1,8 @@
+# client2 — /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+    address 10.10.2.2/24
+    gateway 10.10.2.254

@@ -1,0 +1,22 @@
+# client1 (box) — /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+# vmbr1 : vers OPNsense
+auto eth0
+iface eth0 inet dhcp
+
+# Q6.7 : adresse statique secondaire sur la même carte (à adapter au réseau 10.0.0.0/24)
+# auto eth0:1
+# iface eth0:1 inet static
+#     address 10.0.0.200/24
+
+# vmbr2 : réseau de client2
+auto eth1
+iface eth1 inet static
+    address 10.10.2.254/24
+
+# vmbr3 : réseau de client3 / cloneTest
+auto eth2
+iface eth2 inet static
+    address 10.10.3.254/24

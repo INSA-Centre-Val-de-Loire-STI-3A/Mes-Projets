@@ -1,0 +1,3 @@
+# Q3.1 : le serveur DHCP n'écoute que sur vmbr3
+INTERFACESv4="eth2"
+INTERFACESv6=""

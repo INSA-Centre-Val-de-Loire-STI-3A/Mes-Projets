@@ -1,0 +1,16 @@
+// client2 — /etc/bind/named.conf.options
+options {
+    directory "/var/cache/bind";
+
+    recursion yes;
+    allow-query { any; };
+    allow-recursion { 10.0.0.0/8; localhost; };
+
+    // Q4.1 : tout ce qui n'est pas dans notre zone part vers un autre DNS
+    forwarders { 8.8.8.8; 1.1.1.1; };
+    forward only;
+
+    dnssec-validation no;
+    listen-on { any; };
+    listen-on-v6 { none; };
+};

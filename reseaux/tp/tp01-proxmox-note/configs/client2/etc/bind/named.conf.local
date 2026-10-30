@@ -1,0 +1,5 @@
+// client2 — /etc/bind/named.conf.local
+zone "tienou-tp.insa-cvl.fr" {
+    type master;
+    file "/etc/bind/db.tienou-tp.insa-cvl.fr";
+};

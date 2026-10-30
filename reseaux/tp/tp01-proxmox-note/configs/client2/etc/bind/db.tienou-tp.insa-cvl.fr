@@ -1,0 +1,15 @@
+; zone tienou-tp.insa-cvl.fr — autorité sur client2
+$TTL 3600
+@   IN  SOA ns.tienou-tp.insa-cvl.fr. admin.tienou-tp.insa-cvl.fr. (
+        2026103001 ; serial (AAAAMMJJnn, à incrémenter à chaque modif)
+        3600       ; refresh
+        900        ; retry
+        604800     ; expire
+        3600 )     ; negative TTL
+
+@        IN  NS  ns.tienou-tp.insa-cvl.fr.
+ns       IN  A   10.10.2.2
+
+client2  IN  A   10.10.2.2
+client3  IN  A   10.10.3.2
+www      IN  CNAME client3
