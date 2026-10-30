@@ -1,0 +1,11 @@
+# exécutables compilés à la main à côté des sources
+**/src/*
+!**/src/*/
+!**/src/*.c
+!**/src/*.h
+
+# artefacts de compilation
+bin/
+*.o
+*.d
+a.out
