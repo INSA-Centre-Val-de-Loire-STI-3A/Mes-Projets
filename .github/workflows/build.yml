@@ -1,0 +1,23 @@
+name: build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # compile chaque source C non vide ; les squelettes des TD à venir sont ignorés
+      - name: Compiler les sources C
+        run: |
+          status=0
+          for f in $(git ls-files '*.c'); do
+            [ -s "$f" ] || continue
+            echo "::group::$f"
+            gcc -Wall -Wextra -std=gnu11 -c -o /dev/null "$f" || status=1
+            echo "::endgroup::"
+          done
+          exit $status
