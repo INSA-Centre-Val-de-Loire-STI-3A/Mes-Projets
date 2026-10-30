@@ -27,7 +27,7 @@ jobs:
 
       - name: Analyse statique (cppcheck)
         run: |
-          git ls-files '*.c' | while read -r f; do [ -s "$f" ] && echo "$f"; done > sources.txt
+          for f in $(git ls-files '*.c'); do if [ -s "$f" ]; then echo "$f"; fi; done > sources.txt
           cppcheck --enable=warning,portability --error-exitcode=1 --inline-suppr \
                    --file-list=sources.txt
 
