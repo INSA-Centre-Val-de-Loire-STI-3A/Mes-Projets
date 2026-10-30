@@ -5,7 +5,6 @@
 #include <sys/socket.h>
 #include <string.h>
 #include <netinet/in.h>
-#include <netinet/udp.h>
 
 typedef struct
 {
@@ -37,9 +36,9 @@ void error(char *msg){
     exit(EXIT_FAILURE);
 }
 
-int main(int argc , char **argv)
+int main(int argc, char **argv)
 {
-    ntp_packet packet = {0} ;
+    ntp_packet packet = {0};
     int sockfd;
     int portno = 123;
     sockfd = socket(AF_INET, SOCK_DGRAM, 0);
@@ -47,12 +46,12 @@ int main(int argc , char **argv)
     struct hostent *server;
     struct sockaddr_in serv_addr;
 
-    bzero(&serv_addr, sizeof serv_addr);
+    memset(&serv_addr, 0, sizeof serv_addr);
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(portno);
     server = gethostbyname(host_name);
     if(server == NULL) error("ERROR no such host");
-    bcopy(server->h_addr_list[0], &serv_addr.sin_addr.s_addr, server->h_length);
+    memcpy(&serv_addr.sin_addr.s_addr, server->h_addr_list[0], server->h_length);
 
     if(sockfd < 0)
         error("ERROR opening socket");

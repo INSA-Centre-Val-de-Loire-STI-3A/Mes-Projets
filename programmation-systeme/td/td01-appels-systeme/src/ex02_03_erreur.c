@@ -4,12 +4,12 @@
 #include <stdio.h>
 int main(void)
 {
-    long error = syscall(SYS_write, 9, "hello\n",6); /* fd volontairement invalide (exercice 2) */
-    if(error == -1) 
+    long ret = syscall(SYS_write, 9, "hello\n",6); /* fd volontairement invalide (exercice 2) */
+    if(ret == -1)
     {
         perror("write");
         return 1;
     }
-    
+
     return 0;
 }

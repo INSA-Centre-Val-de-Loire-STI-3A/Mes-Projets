@@ -42,17 +42,17 @@ reseaux/                  TP Proxmox : configs rangées par machine, scripts de 
 ```
 
 Chaque TD suit le même schéma : `README.md` (énoncé résumé, exercices),
-`Makefile`, `src/` (un exécutable par fichier `.c`).
+`Makefile` et `src/` (un programme par fichier `.c`).
 
 ## Compiler et lancer
 
-Prérequis : Linux, `gcc`, `make`.
+Prérequis : Linux et `gcc`.
 
 ```sh
 git clone https://github.com/Tienou4/insa-cvl-sti.git
 cd insa-cvl-sti/programmation-systeme/td/td01-appels-systeme
-make
-./bin/ex02_03_erreur      # write: Bad file descriptor
+gcc -Wall -Wextra -o ex02 src/ex02_03_erreur.c
+./ex02                    # write: Bad file descriptor
 ```
 
 À chaque push, GitHub Actions compile toutes les sources C (`-Wall -Wextra -Werror`, analyseur
