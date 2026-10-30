@@ -42,18 +42,17 @@ int main(int argc , char **argv)
     ntp_packet packet = {0} ;
     int sockfd;
     int portno = 123;
-    sockfd = socked(AF_INET, SOCK_DGRAM, 0);
-    char *host_name = "fr .pool.ntp.org";
+    sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    char *host_name = "fr.pool.ntp.org";
     struct hostent *server;
     struct sockaddr_in serv_addr;
 
     bzero(&serv_addr, sizeof serv_addr);
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_addr = htons(portno);
+    serv_addr.sin_port = htons(portno);
     server = gethostbyname(host_name);
-    bcopy(server->h_addr_list , &serv_addr.sin_addr.s_addr,server->h_length);
-
-    if(server < 0) error("ERROR no such host");
+    if(server == NULL) error("ERROR no such host");
+    bcopy(server->h_addr_list[0], &serv_addr.sin_addr.s_addr, server->h_length);
 
     if(sockfd < 0)
         error("ERROR opening socket");
