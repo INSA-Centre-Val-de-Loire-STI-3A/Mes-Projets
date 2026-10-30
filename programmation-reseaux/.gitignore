@@ -1,0 +1,12 @@
+bin/
+*.o
+*.d
+a.out
+# énoncés (non redistribuables)
+*.pdf
+# fichiers générés par les tests
+test.txt
+download*.txt
+*.tmp
+# données du serveur IRC (comptes enregistrés)
+tp/tp01-irc-note/data/
