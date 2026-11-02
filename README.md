@@ -29,7 +29,7 @@ dossier, et se remplit au fur et à mesure.
 |---|---|---|
 | Programmation système | [TD1 — Appels système](programmation-systeme/td/td01-appels-systeme/) | ✅ Terminé |
 | | TD1 bis à TD8 · TP mini-glibc (`mini_cat`, mini-shell) | ⏳ À venir |
-| Programmation réseau | [TD1 — Client NTP en UDP](programmation-reseaux/td/td01-client-ntp/) | 🚧 En cours |
+| Programmation réseau | [TD1 — Client NTP en UDP](programmation-reseaux/td/td01-client-ntp/) | ✅ Terminé |
 | | TD2 UDP / TCP · TD3 serveur multi-client · TP noté IRC | ⏳ À venir |
 | Réseaux | [TP noté — Réseau de conteneurs sur Proxmox](reseaux/tp/tp01-proxmox-note/) | 🚧 En cours |
 

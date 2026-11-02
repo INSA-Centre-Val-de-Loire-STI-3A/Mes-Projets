@@ -4,12 +4,13 @@ Interroger un serveur NTP (`fr.pool.ntp.org`, UDP port 123) et afficher l'heure 
 
 | Fichier | Exercices |
 |---|---|
-| `src/ntpclient-udp.c` | 1-24 (à venir ; le début est pour l'instant dans `ntpclient-udp-sendto.c`) : `error()`, struct `ntp_packet` (48 octets), macros `SET_LI/VN/MODE`, `socket`, `gethostbyname`, `connect`, `write`/`read`, `ntohl`, `NTP_TIMESTAMP_DELTA`, `ctime` |
+| `src/ntpclient-udp.c` | 1-24 : `error()`, struct `ntp_packet` (48 octets), macros `SET_LI/VN/MODE`, `socket`, `gethostbyname`, `connect`, `write`/`read`, `ntohl`, `NTP_TIMESTAMP_DELTA`, `ctime` |
 | `src/ntpclient-udp-sendto.c` | 25-26 : serveur passé en argument, `sendto`/`recvfrom` à la place de `connect` + `read`/`write` |
 
 ```sh
-gcc -Wall -Wextra -o ntpclient src/ntpclient-udp-sendto.c
-./ntpclient fr.pool.ntp.org
+make
+./bin/ntpclient-udp                         # interroge fr.pool.ntp.org
+./bin/ntpclient-udp-sendto fr.pool.ntp.org  # serveur au choix
 ```
 
 Vérification Wireshark (ex. 18) : filtre `udp.port == 123`.
