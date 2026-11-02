@@ -42,3 +42,21 @@ jobs:
             # ces exercices provoquent volontairement EBADF : code de sortie 1 attendu
             /tmp/$ex 2>&1 | grep -q "Bad file descriptor"
           done
+
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # chaque exercice se vérifie par ses assert : le script doit se terminer sans erreur
+      - name: Exécuter les TD Python
+        run: |
+          status=0
+          for f in $(git ls-files 'python/*.py'); do
+            echo "::group::$f"
+            python3 -W error "$f" || status=1
+            echo "::endgroup::"
+          done
+          exit $status

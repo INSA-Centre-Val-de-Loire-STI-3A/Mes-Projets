@@ -3,9 +3,15 @@
 !**/src/*/
 !**/src/*.c
 !**/src/*.h
+!**/src/*.py
 
 # artefacts de compilation
 bin/
 *.o
 *.d
 a.out
+
+# Python
+__pycache__/
+*.pyc
+.venv/
