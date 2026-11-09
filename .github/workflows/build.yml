@@ -15,12 +15,14 @@ jobs:
 
       # compile chaque source C non vide ; les squelettes des TD à venir sont ignorés
       - name: Compiler (-Wall -Wextra -Werror, analyseur statique de gcc)
+        env:
+          IRC_INCLUDE: programmation-reseaux/tp/tp01-irc-note/include   # en-têtes du TP IRC
         run: |
           status=0
           for f in $(git ls-files '*.c'); do
             [ -s "$f" ] || continue
             echo "::group::$f"
-            gcc -Wall -Wextra -Werror -fanalyzer -std=gnu11 -c -o /dev/null "$f" || status=1
+            gcc -Wall -Wextra -Werror -fanalyzer -std=gnu11 -I"$IRC_INCLUDE" -c -o /dev/null "$f" || status=1
             echo "::endgroup::"
           done
           exit $status
@@ -29,7 +31,7 @@ jobs:
         run: |
           for f in $(git ls-files '*.c'); do if [ -s "$f" ]; then echo "$f"; fi; done > sources.txt
           cppcheck --enable=warning,portability --error-exitcode=1 --inline-suppr \
-                   --file-list=sources.txt
+                   -I programmation-reseaux/tp/tp01-irc-note/include --file-list=sources.txt
 
       # exécute les programmes qui n'ont pas besoin du réseau, sous AddressSanitizer
       - name: Exécuter sous AddressSanitizer
@@ -42,6 +44,29 @@ jobs:
             # ces exercices provoquent volontairement EBADF : code de sortie 1 attendu
             /tmp/$ex 2>&1 | grep -q "Bad file descriptor"
           done
+
+  reseau:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compiler les TD et le TP de programmation réseau
+        run: make -C programmation-reseaux
+      # TD3 : le fichier téléchargé doit être identique à l'original
+      - name: Tester le téléchargement (TD3)
+        run: |
+          cd programmation-reseaux/td/td03-tcp-multiclient
+          ./scripts/gen_test_file.sh /tmp/test.txt
+          (cat /tmp/test.txt | nc -l 8000 -N &) ; sleep 0.5
+          ./bin/download_client 127.0.0.1 8000 /tmp/download.txt
+          cmp /tmp/test.txt /tmp/download.txt
+      # TP IRC : echo, serveur et client (sous AddressSanitizer)
+      - name: Tester le TP IRC
+        env:
+          ASAN_OPTIONS: verify_asan_link_order=0
+        run: |
+          cd programmation-reseaux/tp/tp01-irc-note
+          make clean
+          make test CFLAGS="-Wall -Wextra -g -Iinclude -fsanitize=address,undefined"
 
   python:
     runs-on: ubuntu-latest
