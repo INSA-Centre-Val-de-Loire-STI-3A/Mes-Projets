@@ -45,9 +45,30 @@ Pour `/send pseudo fichier`, le client envoie l'en-tête `/send <pseudo> <nom> <
 
 ## Compilation et tests
 
+Prérequis : `gcc`, `libcrypt` (paquet `libcrypt-dev`, installé avec `libc6-dev`), `nc` pour les tests.
+
 ```sh
 make
-./bin/irc_server 8000
-./bin/irc_client 127.0.0.1 8000
-make test
+./bin/irc_server 8000                      # comptes dans data/accounts.txt
+./bin/irc_client 127.0.0.1 8000            # dans plusieurs terminaux
+./bin/irc_client 127.0.0.1 8000 none       # sans NTP (horloge locale)
+make test                                  # tests/test_echo.sh et tests/test_irc.sh
 ```
+
+On peut aussi se connecter avec `nc localhost 8000` puis taper `/nickname pseudo`.
+
+Exemple de session :
+
+```
+[21:18:00] *** Bienvenue sur le chat. Choisissez un pseudo : /nickname pseudo (/help pour l'aide)
+[21:18:00] *** Vous êtes maintenant alice
+[21:18:04] *** bob a rejoint #general
+[21:18:09] bob : salut alice
+/mp bob à toi seul
+[21:18:15] private message to : bob : à toi seul
+/send bob notes.txt
+[21:18:20] *** Envoi de notes.txt (532 octets) à bob
+[21:18:20] *** Fichier transmis
+```
+
+Réponses aux questions, choix de conception et sécurité : [`rapport.md`](rapport.md).

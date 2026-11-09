@@ -11,11 +11,12 @@ all: bin/tcpserver bin/tcpclient bin/irc_server bin/irc_client
 bin/tcp%: src/echo/tcp%.c | bin
 	$(CC) $(CFLAGS) -o $@ $<
 
-bin/irc_server: $(SERVER) $(COMMON) | bin
-	$(CC) $(CFLAGS) -o $@ $^
+# -lcrypt : hachage des mots de passe (crypt_r, yescrypt)
+bin/irc_server: $(SERVER) $(COMMON) $(wildcard include/*.h) | bin
+	$(CC) $(CFLAGS) -o $@ $(SERVER) $(COMMON) -lcrypt
 
-bin/irc_client: $(CLIENT) $(COMMON) | bin
-	$(CC) $(CFLAGS) -o $@ $^
+bin/irc_client: $(CLIENT) $(COMMON) $(wildcard include/*.h) | bin
+	$(CC) $(CFLAGS) -o $@ $(CLIENT) $(COMMON)
 
 bin:
 	mkdir -p bin
