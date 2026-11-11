@@ -1,4 +1,4 @@
-def greatest_root(a:float, b:float , c:float) -> float:
+def greatest_root(a:float, b:float , c:float) -> float | None:
     """Return the greatest root of the polynomial ax^2 + bx + c = 0"""
     assert a != 0
     delta = b**2 - 4*a*c
