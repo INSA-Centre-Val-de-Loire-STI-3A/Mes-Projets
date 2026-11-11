@@ -2,10 +2,11 @@
 
 # INSA CVL — Sécurité et Technologies Informatiques
 
-**Programmation système et réseau en C sous Linux · Python · Administration réseau sur Proxmox**
+**Programmation système et réseau en C sous Linux · Assembleur x86 · Python · Administration réseau sur Proxmox**
 
 [![build](https://github.com/Tienou4/insa-cvl-sti/actions/workflows/build.yml/badge.svg)](https://github.com/Tienou4/insa-cvl-sti/actions/workflows/build.yml)
 ![C](https://img.shields.io/badge/C-GNU11-00599C?logo=c&logoColor=white)
+![Assembleur](https://img.shields.io/badge/Assembleur-x86%20%2F%20x86__64-6E4C13?logo=assemblyscript&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-POSIX-FCC624?logo=linux&logoColor=black)
 ![Proxmox](https://img.shields.io/badge/Proxmox-Debian%2013-E57000?logo=proxmox&logoColor=white)
@@ -21,7 +22,8 @@ dossier, et se remplit au fur et à mesure.
 | Domaine | Notions |
 |---|---|
 | **Programmation système** | appels système bruts (`syscall`), `errno`, gestion des erreurs, fichiers et inodes, verrous, processus, `exec`, redirections |
-| **Programmation réseau** | sockets UDP et TCP, protocole NTP, résolution DNS, ordre des octets réseau, serveur multi-client (`poll`), protocole texte type IRC |
+| **Programmation réseau** | sockets UDP et TCP, protocole NTP, résolution DNS, ordre des octets réseau, serveur multi-client (`poll`), protocole texte type IRC, transfert de fichiers, hachage des mots de passe (`crypt`), validation des entrées |
+| **Assembleur x86** | mode réel 8086 et mode protégé, modes d'adressage, drapeaux de l'UAL, structures de contrôle, appels système `int 0x80` / `syscall`, pile et passage de paramètres, débogage avec gdb / ddd |
 | **Python** | fonctions et assertions (programmation défensive), flottants, conteneurs, compréhensions, générateurs, POO et méthodes spéciales, `match`/`case` |
 | **Administration réseau** | routage statique, IP forwarding, NAT / masquerade (nftables), DHCP (isc-dhcp-server), DNS (bind9), rebond SSH |
 
@@ -32,10 +34,13 @@ dossier, et se remplit au fur et à mesure.
 | Programmation système | [TD1 — Appels système](programmation-systeme/td/td01-appels-systeme/) | ✅ Terminé |
 | | TD1 bis à TD8 · TP mini-glibc (`mini_cat`, mini-shell) | ⏳ À venir |
 | Programmation réseau | [TD1 — Client NTP en UDP](programmation-reseaux/td/td01-client-ntp/) | ✅ Terminé |
-| | TD2 UDP / TCP · TD3 serveur multi-client · TP noté IRC | ⏳ À venir |
+| | [TD2 — UDP / TCP](programmation-reseaux/td/td02-udp-tcp/) · [TD3 — Serveur multi-client](programmation-reseaux/td/td03-tcp-multiclient/) | ✅ Terminé |
+| | [TP noté — Chat IRC (serveur `poll`, client NTP, comptes, salons, fichiers)](programmation-reseaux/tp/tp01-irc-note/) | ✅ Terminé |
+| Assembleur | [TD1 — x86 : 8086 et mode protégé 32 bits](assembleur/td/td01-x86-32bits/) | 🚧 En cours |
+| | [TD2 — Appels système, fonctions et pile](assembleur/td/td02-fonctions-pile/) | 🚧 En cours |
 | Python | [TD1 — Types de base et fonctions](python/td/td01-types-fonctions/) | 🚧 En cours |
-| | [TD5 — Générateurs et `None`](python/td/td05-generateurs-none/) · [TD6 — Ensembles, dictionnaires, tranches](python/td/td06-ensembles-dicts-tranches/) | 🚧 En cours |
-| | TD2 à TD4, TD7 à TD12 (POO, matrices creuses, calcul formel, suite de Conway…) | ⏳ À venir |
+| | [TD3 — Flottants](python/td/td03-flottants/) · [TD5 — Générateurs et `None`](python/td/td05-generateurs-none/) · [TD6 — Ensembles, dictionnaires, tranches](python/td/td06-ensembles-dicts-tranches/) | 🚧 En cours |
+| | TD2, TD4, TD7 à TD12 (POO, matrices creuses, calcul formel, suite de Conway…) | ⏳ À venir |
 | Réseaux | [TP noté — Réseau de conteneurs sur Proxmox](reseaux/tp/tp01-proxmox-note/) | 🚧 En cours |
 
 ## Organisation
@@ -43,6 +48,7 @@ dossier, et se remplit au fur et à mesure.
 ```
 programmation-systeme/    C / POSIX : TD (appels système → redirections) et TP mini-glibc
 programmation-reseaux/    sockets en C : TD (NTP, UDP/TCP, multi-client) et TP noté IRC
+assembleur/               nasm x86 / x86_64 : un TD par séance, un programme par exercice
 python/                   Python 3 : un TD par chapitre d'exercices du polycopié
 reseaux/                  TP Proxmox : configs rangées par machine, scripts de test, rapport
 ```
@@ -62,8 +68,9 @@ gcc -Wall -Wextra -o ex02 src/ex02_03_erreur.c
 ```
 
 À chaque push, GitHub Actions compile toutes les sources C (`-Wall -Wextra -Werror`, analyseur
-statique de gcc), les passe à `cppcheck`, exécute les TD système sous AddressSanitizer
-et lance chaque script Python (ses `assert` servent de tests).
+statique de gcc), les passe à `cppcheck`, exécute les TD système sous AddressSanitizer,
+assemble les TD d'assembleur avec `nasm` et exécute ceux qui se terminent proprement,
+lance les tests du TD3 et du TP IRC (sous AddressSanitizer), et lance chaque script Python (ses `assert` servent de tests).
 
 ## Auteur
 
