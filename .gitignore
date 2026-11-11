@@ -4,6 +4,7 @@
 !**/src/*.c
 !**/src/*.h
 !**/src/*.py
+!**/src/*.asm
 
 # artefacts de compilation
 bin/

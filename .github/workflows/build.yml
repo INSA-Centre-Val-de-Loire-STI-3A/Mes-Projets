@@ -85,3 +85,20 @@ jobs:
             echo "::endgroup::"
           done
           exit $status
+
+  assembleur:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Installer nasm
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq nasm
+      - name: Assembler les TD
+        run: make -C assembleur
+      # les programmes qui se terminent par exit doivent renvoyer 0
+      - name: Exécuter
+        run: |
+          cd assembleur/td/td01-x86-32bits
+          test "$(./bin/hello32)" = "Hello insa-cvl!"
+          for ex in ex2_1_drapeaux ex2_3_operations ex2_4_if_else; do ./bin/$ex; done
+          cd ../td02-fonctions-pile
+          test "$(./bin/ex2_aff_bin)" = "Valeur en binaire : 00000000000000000000011111101010"
